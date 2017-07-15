@@ -14,6 +14,15 @@ import android.widget.Toast;
  * Created by muthuveerappans on 7/14/17.
  */
 
+/*
+Try and see:
++ Create a new page called ScoreActivity and show the score with a message considering the following factors:
+    + If percentage of score is above 90, message should be "Brilliant. Keep it up."
+    + If percentage is between 60 - 90, message should be "You have the capability to achieve more."
+    + If percentage is below 60, message should be "With practice and you shall become genius."
++ Place a button in the xml for ScoreActivity and restart the puzzle when clicked.
+ */
+
 public class PuzzleActivity extends AppCompatActivity
         implements View.OnClickListener {
     private TextView left_textView;

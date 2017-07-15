@@ -27,15 +27,6 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="#ffffff"
                 android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/right_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0/0"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textColor="#ffffff"
-                android:textStyle="bold" />
         </LinearLayout>
 
     </android.support.v7.widget.Toolbar>
@@ -51,19 +42,22 @@
         <android.support.v7.widget.CardView
             android:id="@+id/puzzle_content_card"
             android:layout_width="match_parent"
-            android:layout_margin="8dp"
             android:layout_height="0dp"
+            android:layout_margin="8dp"
             android:layout_weight="1">
 
-            <!--fragment content goes here-->
+            <FrameLayout
+                android:id="@+id/puzzle_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
         </android.support.v7.widget.CardView>
 
         <Button
             android:id="@+id/submit_button"
-            android:layout_margin="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
             android:text="SUBMIT" />
 
     </LinearLayout>

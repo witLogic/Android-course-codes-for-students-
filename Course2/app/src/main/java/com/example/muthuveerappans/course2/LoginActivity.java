@@ -33,6 +33,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 // Open the Puzzle activity.
                 openPuzzleActivity();
+            } else {
+                Toast.makeText(LoginActivity.this, "User not found", Toast.LENGTH_SHORT).show();
             }
         }
     }

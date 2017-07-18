@@ -41,7 +41,7 @@
                 android:layout_height="56dp"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
-                tools:src="@mipmap/ic_heart_filled" />
+                tools:src="@mipmap/ic_heart_un_filled" />
 
             <TextView
                 android:id="@+id/movie_title_txt"

@@ -1,14 +1,18 @@
 package com.example.muthuveerappans.course3.Activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -23,6 +27,7 @@ import com.example.muthuveerappans.course3.NetworkHelpers.NetworkObject;
 import com.example.muthuveerappans.course3.NetworkHelpers.Result;
 import com.example.muthuveerappans.course3.ParserHelpers.JsonToPojoParser;
 import com.example.muthuveerappans.course3.R;
+import com.example.muthuveerappans.course3.RecyclerItemClickListener;
 import com.example.muthuveerappans.course3.Specs;
 import com.squareup.picasso.Picasso;
 
@@ -62,6 +67,38 @@ public class MoviesListActivity extends AppCompatActivity implements DownloadCal
             movie_description_txt.setText(genre.getName());
             getData(genre.getId());
         }
+
+        // click listener for recyclerview
+        moviesListRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this
+                , new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Movie movie = movieList.get(position);
+
+                // start the detail activity
+                Intent intent = new Intent(MoviesListActivity.this, MovieDetailActivity.class);
+                intent.putExtra("movie_data", movie);
+                startActivity(intent);
+            }
+        }));
+
+        // enable the back button
+        ActionBar actionBar = getSupportActionBar();
+
+        if (actionBar != null)
+            actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                Intent upIntent = NavUtils.getParentActivityIntent(this);
+                NavUtils.navigateUpTo(this, upIntent);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     // get the data from server using HTTP.

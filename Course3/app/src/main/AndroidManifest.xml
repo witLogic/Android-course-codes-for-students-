@@ -23,7 +23,45 @@
         </activity>
 
         <!--activity that shows the list of movies for a particular genre-->
-        <activity android:name=".Activities.MoviesListActivity" />
+        <activity
+            android:name=".Activities.MoviesListActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName=".Activities.GenresListActivity">
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.GenresListActivity" />
+        </activity>
+
+        <!--login page activity-->
+        <!--This needs to be redirected from the web page. So specific intent filters are added-->
+        <activity android:name=".Activities.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:host="www.course3_app.com" />
+                <data android:scheme="http" />
+                <data android:pathPattern="/login_approved" />
+            </intent-filter>
+        </activity>
+
+        <!--movie detail activity
+            singleTop mode is used for : If an instance of the activity already exists at the top of the target task,
+            the system routes the intent to that instance through a call to its onNewIntent() method,
+            rather than creating a new instance of the activity.-->
+        <activity
+            android:name=".Activities.MovieDetailActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName=".Activities.MoviesListActivity">
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.MoviesListActivity" />
+        </activity>
+
     </application>
 
 </manifest>

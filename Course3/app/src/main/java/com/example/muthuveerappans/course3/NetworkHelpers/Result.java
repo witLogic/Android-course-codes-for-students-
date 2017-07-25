@@ -8,9 +8,11 @@ package com.example.muthuveerappans.course3.NetworkHelpers;
 public class Result {
     public String mResultValue;
     public Exception mException;
+    public String url;
 
-    public Result(String resultValue) {
+    public Result(String resultValue, String url) {
         mResultValue = resultValue;
+        this.url = url;
     }
 
     public Result(Exception exception) {

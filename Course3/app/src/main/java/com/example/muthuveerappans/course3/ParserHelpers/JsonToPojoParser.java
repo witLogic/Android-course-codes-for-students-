@@ -76,4 +76,56 @@ public class JsonToPojoParser {
 
         return moviesList;
     }
+
+    public String getAuthToken(String json) {
+        JsonParser parser = new JsonParser();
+        JsonObject authJson = parser.parse(json).getAsJsonObject();
+
+        JsonElement requestTokenElement = authJson.get("request_token");
+
+        if (requestTokenElement != null) {
+            return requestTokenElement.getAsString();
+        }
+
+        return null;
+    }
+
+    public String getSessionID(String json) {
+        JsonParser parser = new JsonParser();
+        JsonObject authJson = parser.parse(json).getAsJsonObject();
+
+        JsonElement sessionIdElement = authJson.get("session_id");
+
+        if (sessionIdElement != null) {
+            return sessionIdElement.getAsString();
+        }
+
+        return null;
+    }
+
+    public int getAccountID(String json) {
+        JsonParser parser = new JsonParser();
+        JsonObject accountJson = parser.parse(json).getAsJsonObject();
+
+        JsonElement accountIdElement = accountJson.get("id");
+
+        if (accountIdElement != null) {
+            return accountIdElement.getAsInt();
+        }
+
+        return -1;
+    }
+
+    public boolean markFavouriteStatus(String json) {
+        JsonParser parser = new JsonParser();
+        JsonObject favJson = parser.parse(json).getAsJsonObject();
+
+        JsonElement statusCodeElement = favJson.get("status_code");
+
+        if (statusCodeElement != null) {
+            return statusCodeElement.getAsInt() == 12;
+        }
+
+        return false;
+    }
 }

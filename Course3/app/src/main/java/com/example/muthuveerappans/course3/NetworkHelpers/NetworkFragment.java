@@ -179,24 +179,26 @@ public class NetworkFragment extends Fragment {
                 // Already true by default but setting just in case; needs to be true since this request
                 // is carrying an input (response) body.
                 connection.setDoInput(true);
-                // Open communications link (network traffic occurs here).
-                connection.connect();
-
-                publishProgress(DownloadCallback.Progress.CONNECT_SUCCESS);
 
                 if (networkObject.getHttpMethod().equals("POST")) {
+                    // set the connection content-type as JSON, meaning we are sending JSON data.
+                    connection.setRequestProperty("Content-Type", "application/json;charset=utf-8");
                     // Send POST data.
                     publishProgress(DownloadCallback.Progress.DOWNLOADING);
                     DataOutputStream printout = new DataOutputStream(connection.getOutputStream());
-                    printout.writeBytes(URLEncoder.encode(networkObject.getPostData(), "UTF-8"));
+                    printout.write(networkObject.getPostData().getBytes("UTF-8"));
                     printout.flush();
                     printout.close();
                 }
 
+                publishProgress(DownloadCallback.Progress.CONNECT_SUCCESS);
+
+                // Open communications link (network traffic occurs here).
+                connection.connect();
+
                 int responseCode = connection.getResponseCode();
-                if (responseCode != HttpsURLConnection.HTTP_OK) {
-                    result = new Result(new Exception("HTTP error code: " + responseCode));
-                } else {
+                if (responseCode == HttpsURLConnection.HTTP_OK ||
+                        responseCode == HttpsURLConnection.HTTP_CREATED) {
                     // Retrieve the response body as an InputStream.
                     stream = connection.getInputStream();
                     publishProgress(DownloadCallback.Progress.DOWNLOADING);
@@ -212,8 +214,10 @@ public class NetworkFragment extends Fragment {
                         // Should not use this in production.
                         String contentLength = connection.getHeaderField("Content-Length");
                         long contentLengthLong = contentLength == null ? 16384 : Long.parseLong(contentLength);
-                        result = new Result(readStream(stream, (int) contentLengthLong));
+                        result = new Result(readStream(stream, (int) contentLengthLong), networkObject.getURL());
                     }
+                } else {
+                    result = new Result(new Exception("HTTP error code: " + responseCode));
                 }
             } catch (Exception e) {
                 result = new Result(e);

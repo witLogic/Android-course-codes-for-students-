@@ -142,8 +142,9 @@ public class LoginActivity extends AppCompatActivity implements DownloadCallback
             // then instead of launching a new instance of that activity,
             // all of the other activities on top of it will be closed and this
             // Intent will be delivered to the (now on top) old activity as a new Intent.
+            // The parent activity should also contain singleTop in manifest.
             //
-            //For example, consider a task consisting of the activities: A, B, C, D.
+            // For example, consider a task consisting of the activities: A, B, C, D.
             // If D calls startActivity() with an Intent that resolves to the component of activity B,
             // then C and D will be finished and B receive the given Intent, resulting in the stack now being: A, B.
             // more info: https://developer.android.com/reference/android/content/Intent.html#FLAG_ACTIVITY_CLEAR_TOP

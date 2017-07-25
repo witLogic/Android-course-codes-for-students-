@@ -15,4 +15,12 @@
         <item name="android:fontFamily">sans-serif</item>
     </style>
 
+    <!--base text style for page title -->
+    <style name="page_title_txt">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
 </resources>

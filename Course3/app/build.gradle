@@ -32,4 +32,7 @@ dependencies {
     // recycler view library
     compile 'com.android.support:recyclerview-v7:25.3.1'
     testCompile 'junit:junit:4.12'
+
+    // gson library to parse jsondata
+    compile 'com.google.code.gson:gson:2.7'
 }

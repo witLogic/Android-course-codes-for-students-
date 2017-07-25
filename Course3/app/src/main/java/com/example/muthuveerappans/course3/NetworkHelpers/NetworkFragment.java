@@ -32,22 +32,27 @@ public class NetworkFragment extends Fragment {
 
     private DownloadCallback<Result> mCallback;
     private DownloadTask mDownloadTask;
-    private NetworkObject[] networkObject;
+    private NetworkObject networkObject;
 
-    public static NetworkFragment getInstance(FragmentManager fragmentManager, NetworkObject[] networkObject) {
+    public static NetworkFragment getInstance(FragmentManager fragmentManager, NetworkObject networkObject) {
         NetworkFragment networkFragment = new NetworkFragment();
         Bundle args = new Bundle();
-        args.putParcelableArray(DATA_OBJECT, networkObject);
+        args.putParcelable(DATA_OBJECT, networkObject);
         networkFragment.setArguments(args);
         // add the invisible fragment.
         fragmentManager.beginTransaction().add(networkFragment, TAG).commit();
+        fragmentManager.executePendingTransactions();
         return networkFragment;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        networkObject = (NetworkObject[]) getArguments().getParcelableArray(DATA_OBJECT);
+
+        // Retain this Fragment across configuration changes in the host Activity.
+        setRetainInstance(true);
+
+        networkObject = getArguments().getParcelable(DATA_OBJECT);
     }
 
     @Override
@@ -92,7 +97,7 @@ public class NetworkFragment extends Fragment {
     /**
      * Implementation of AsyncTask designed to get/post data from/to the network.
      */
-    private static class DownloadTask extends AsyncTask<NetworkObject, Integer, Result[]> {
+    private static class DownloadTask extends AsyncTask<NetworkObject, Integer, Result> {
 
         private static final int HTTP_TIMEOUT = 3000; //in millis
 
@@ -117,7 +122,7 @@ public class NetworkFragment extends Fragment {
                         (networkInfo.getType() != ConnectivityManager.TYPE_WIFI
                                 && networkInfo.getType() != ConnectivityManager.TYPE_MOBILE)) {
                     // If no connectivity, cancel task and update Callback with null data.
-                    mCallback.onResponseReceived(null);
+                    mCallback.onResponseReceived(new Result(new Exception("No Internet connection.")));
                     cancel(true);
                 }
             }
@@ -127,18 +132,13 @@ public class NetworkFragment extends Fragment {
          * Defines work to perform on the background thread.
          */
         @Override
-        protected Result[] doInBackground(NetworkObject... networkObjects) {
-            Result[] results = null;
+        protected Result doInBackground(NetworkObject... networkObjects) {
+            Result results = null;
 
-            if (!isCancelled() && networkObjects != null && networkObjects.length > 0) {
-
-                results = new Result[networkObjects.length];
-
-                for (int i = 0; i < networkObjects.length; i++) {
-                    NetworkObject networkObject = networkObjects[i];
-                    results[i] = downloadUrl(networkObject);
-                }
+            if (!isCancelled() && networkObjects[0] != null) {
+                results = downloadUrl(networkObjects[0]);
             }
+
             return results;
         }
 
@@ -146,7 +146,7 @@ public class NetworkFragment extends Fragment {
          * Updates the DownloadCallback with the result.
          */
         @Override
-        protected void onPostExecute(Result[] result) {
+        protected void onPostExecute(Result result) {
             if (result != null && mCallback != null) {
                 mCallback.onResponseReceived(result);
             }
@@ -199,8 +199,9 @@ public class NetworkFragment extends Fragment {
                     stream = connection.getInputStream();
                     publishProgress(DownloadCallback.Progress.DOWNLOADING);
                     if (stream != null) {
-                        // Converts Stream to String with max length of 500.
-                        result = new Result(readStream(stream, 500));
+                        // Converts Stream to String with max length of contentLength.
+                        long contentLength = Long.parseLong(connection.getHeaderField("Content-Length"));
+                        result = new Result(readStream(stream, (int) contentLength));
                     }
                 }
             } catch (Exception e) {

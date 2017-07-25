@@ -18,7 +18,7 @@ public interface DownloadCallback<T> {
     /*
     Called when the response is received from the HTTP call.
      */
-    void onResponseReceived(T[] result);
+    void onResponseReceived(T result);
 
     /*
     Get the device's active network status in the form of a NetworkInfo object.

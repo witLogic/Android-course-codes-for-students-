@@ -91,7 +91,7 @@ public class GenresListActivity extends AppCompatActivity implements DownloadCal
     @Override
     public void onResponseReceived(Result result) {
         if (genreRecyclerView != null && genreAdapter != null) {
-            genres.clear();
+            genres.clear(); // clear the data list so we don't append the values. We need to add a new set of values
 
             if (result.mException != null) {
                 Toast.makeText(GenresListActivity.this, result.mException.getLocalizedMessage(), Toast.LENGTH_SHORT)

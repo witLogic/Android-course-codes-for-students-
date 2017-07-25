@@ -17,6 +17,8 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.List;
+import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -200,8 +202,17 @@ public class NetworkFragment extends Fragment {
                     publishProgress(DownloadCallback.Progress.DOWNLOADING);
                     if (stream != null) {
                         // Converts Stream to String with max length of contentLength.
-                        long contentLength = Long.parseLong(connection.getHeaderField("Content-Length"));
-                        result = new Result(readStream(stream, (int) contentLength));
+                        // The content length may be null if the server uses Chunked Transfer Encoding to send data
+                        // More about Chunked Transfer Encoding https://en.wikipedia.org/wiki/Chunked_transfer_encoding.
+                        //
+                        // Algorithm for dynamically allocating the buffer can be found
+                        // https://stackoverflow.com/questions/10439829/urlconnection-getcontentlength-returns-1
+                        //
+                        // For simplicity we are using a constant value as the max buffer size.
+                        // Should not use this in production.
+                        String contentLength = connection.getHeaderField("Content-Length");
+                        long contentLengthLong = contentLength == null ? 16384 : Long.parseLong(contentLength);
+                        result = new Result(readStream(stream, (int) contentLengthLong));
                     }
                 }
             } catch (Exception e) {

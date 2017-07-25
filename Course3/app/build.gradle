@@ -35,4 +35,7 @@ dependencies {
 
     // gson library to parse jsondata
     compile 'com.google.code.gson:gson:2.7'
+
+    // image download library
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }

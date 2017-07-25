@@ -46,4 +46,17 @@ public class Specs {
                 .appendQueryParameter("language", "en-US");
         return builder;
     }
+
+    // construct movie image path URL
+    public static String getMoviePosterURL(String path) {
+        Uri.Builder builder = new Uri.Builder();
+        builder.scheme("https")
+                .authority("image.tmdb.org")
+                .appendPath("t")
+                .appendPath("p")
+                .appendPath("w500")
+                .appendPath(path.substring(1));
+
+        return builder.build().toString();
+    }
 }

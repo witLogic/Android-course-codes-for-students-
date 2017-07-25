@@ -1,6 +1,7 @@
 package com.example.muthuveerappans.course3.ParserHelpers;
 
 import com.example.muthuveerappans.course3.Modals.Genre;
+import com.example.muthuveerappans.course3.Modals.Movie;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -48,5 +49,31 @@ public class JsonToPojoParser {
         }
 
         return genreList;
+    }
+
+    public List<Movie> getMoviesFromJson(String json) {
+        List<Movie> moviesList = new ArrayList<>();
+
+        JsonParser parser = new JsonParser();
+        JsonObject moviesJson = parser.parse(json).getAsJsonObject();
+
+        JsonArray moviesJsonArray = moviesJson.get("results").getAsJsonArray();
+
+        for (JsonElement e : moviesJsonArray) {
+            JsonObject movieJson = e.getAsJsonObject();
+
+            int id = movieJson.get("id").getAsInt();
+            String title = movieJson.get("title").getAsString();
+            String description = movieJson.get("overview").getAsString();
+            String language = movieJson.get("original_language").getAsString();
+            float voterAvg = movieJson.get("vote_average").getAsFloat();
+            String posterPath = movieJson.get("poster_path").getAsString();
+
+            Movie movie = new Movie(id, language, title, description, voterAvg, posterPath);
+
+            moviesList.add(movie);
+        }
+
+        return moviesList;
     }
 }

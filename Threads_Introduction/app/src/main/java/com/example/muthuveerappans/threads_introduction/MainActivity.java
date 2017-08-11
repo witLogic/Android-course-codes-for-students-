@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        // static, global discussion
         Test t1 = new Test();
         Test t2 = new Test();
 
@@ -38,22 +40,6 @@ public class MainActivity extends AppCompatActivity {
 
         t1.print();
         t2.print();
-    }
-
-    // static, global discussion
-    public static class Test {
-        int a = 0;
-        static int a1 = 0;
-
-        public void incrA() {
-            a += 1;
-            a1 += 1;
-        }
-
-        public void print() {
-            Log.i("t", "a: " + a);
-            Log.i("t", "a1: " + a1);
-        }
     }
 
     private class LongOperation extends AsyncTask<Integer, Void, Integer> {
@@ -79,6 +65,22 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(Integer integer) {
             Log.i("test", "Main Thread :" + Thread.currentThread().getId());
             resultTxt.setText("" + integer);
+        }
+    }
+
+    // static, global discussion
+    public static class Test {
+        int a = 0;
+        static int a1 = 0;
+
+        public void incrA() {
+            a += 1;
+            a1 += 1;
+        }
+
+        public void print() {
+            Log.i("t", "a: " + a);
+            Log.i("t", "a1: " + a1);
         }
     }
 }

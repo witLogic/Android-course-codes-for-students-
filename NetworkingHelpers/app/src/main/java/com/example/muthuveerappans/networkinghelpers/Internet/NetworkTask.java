@@ -19,7 +19,7 @@ import javax.net.ssl.HttpsURLConnection;
  */
 
 public class NetworkTask {
-    // Holds the data for internet connection
+    // Holds the data for internet connec tion
     private NetworkObject networkObject;
 
     // Background thread to handle network connection

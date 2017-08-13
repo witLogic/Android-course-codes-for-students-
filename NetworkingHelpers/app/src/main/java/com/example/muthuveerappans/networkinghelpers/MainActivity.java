@@ -13,6 +13,7 @@ import com.example.muthuveerappans.networkinghelpers.Internet.DownloadCallback;
 import com.example.muthuveerappans.networkinghelpers.Internet.NetworkObject;
 import com.example.muthuveerappans.networkinghelpers.Internet.NetworkTask;
 import com.example.muthuveerappans.networkinghelpers.Internet.Result;
+import com.google.gson.JsonObject;
 
 public class MainActivity extends AppCompatActivity implements DownloadCallback<Result> {
     TextView textView;
@@ -26,9 +27,20 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback<
         textView = (TextView) findViewById(R.id.text_view);
 
         // URL's got from https://jsonplaceholder.typicode.com/
-        // URL that gets GENRES from the TMDB server.
         String URL = "https://jsonplaceholder.typicode.com/posts";
+
+        // URL that gets GENRES from the TMDB server.
         NetworkObject networkObject = new NetworkObject(URL, NetworkObject.HTTP_METHOD.GET);
+
+        // POST sample request
+        // Construct a json post body using GSON library
+//        JsonObject bodyJSON = new JsonObject();
+//        bodyJSON.addProperty("userId", "1");
+//        bodyJSON.addProperty("title", "Test from app");
+//        bodyJSON.addProperty("body", "This is a test POST request from the app.");
+//        String body = bodyJSON.toString();
+//
+//        NetworkObject networkObject = new NetworkObject(URL, NetworkObject.HTTP_METHOD.POST, body);
 
         networkTask = new NetworkTask(networkObject, this);
 

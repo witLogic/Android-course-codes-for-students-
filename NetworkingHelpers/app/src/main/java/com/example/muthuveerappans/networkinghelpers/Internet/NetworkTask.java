@@ -19,7 +19,7 @@ import javax.net.ssl.HttpsURLConnection;
  */
 
 public class NetworkTask {
-    // Holds the data for internet connec tion
+    // Holds the data for internet connection
     private NetworkObject networkObject;
 
     // Background thread to handle network connection
@@ -206,7 +206,7 @@ public class NetworkTask {
             while (((readSize = reader.read(rawBuffer)) != -1) && maxReadSize > 0) {
                 if (readSize > maxReadSize) {
                     readSize = maxReadSize;
-                }
+}
                 buffer.append(rawBuffer, 0, readSize);
                 maxReadSize -= readSize;
             }

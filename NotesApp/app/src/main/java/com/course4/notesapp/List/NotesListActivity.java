@@ -33,8 +33,13 @@ public class NotesListActivity extends AppCompatActivity implements NotesListCon
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        notesListAdapter = new NotesListAdapter();
-        recyclerView.setAdapter(notesListAdapter);
+        findViewById(R.id.new_fab).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(NotesListActivity.this, AddNoteActivity.class);
+                startActivity(intent);
+            }
+        });
 
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this
                 , new RecyclerItemClickListener.OnItemClickListener() {
@@ -47,6 +52,15 @@ public class NotesListActivity extends AppCompatActivity implements NotesListCon
         }));
 
         notesListPresenter = new NotesListPresenter(this);
+
+        notesListAdapter = new NotesListAdapter();
+        recyclerView.setAdapter(notesListAdapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        notesListPresenter.getNotesList();
     }
 
     @Override
@@ -92,8 +106,8 @@ public class NotesListActivity extends AppCompatActivity implements NotesListCon
         public NLVH(View itemView) {
             super(itemView);
 
-            titleTxt = (TextView) findViewById(R.id.title);
-            contentTxt = (TextView) findViewById(R.id.content);
+            titleTxt = (TextView) itemView.findViewById(R.id.title_txt);
+            contentTxt = (TextView) itemView.findViewById(R.id.content_txt);
         }
 
         public void populateViews(String title, String content) {

@@ -17,7 +17,7 @@ public class DbCreator extends SQLiteOpenHelper {
             NotesContract.NoteEntry._ID + " INTEGER PRIMARY KEY," +
             NotesContract.NoteEntry.COLUMN_NAME_TITLE + " TEXT," +
             NotesContract.NoteEntry.COLUMN_NAME_CONTENT + " TEXT," +
-            NotesContract.NoteEntry.COLUMN_TIMESTAMP + "DATETIME" + ")";
+            NotesContract.NoteEntry.COLUMN_TIMESTAMP + " DATETIME" + ")";
 
     private static final String DELETE_NOTES_TABLE =
             "DROP TABLE IF EXISTS " + NotesContract.NoteEntry.TABLE;

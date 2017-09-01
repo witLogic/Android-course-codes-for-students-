@@ -57,11 +57,12 @@ public class NotesCRUDHelper {
         return db.insert(NotesContract.NoteEntry.TABLE, null, note.getAsContentValues());
     }
 
-    public ArrayList<Note> query(int id) {
+    public ArrayList<Note> query(int id, boolean getAll) {
         String projection[] = {
                 NotesContract.NoteEntry._ID,
                 NotesContract.NoteEntry.COLUMN_NAME_TITLE,
-                NotesContract.NoteEntry.COLUMN_NAME_TITLE
+                NotesContract.NoteEntry.COLUMN_NAME_CONTENT,
+                NotesContract.NoteEntry.COLUMN_TIMESTAMP
         };
 
         /* USE of '?':
@@ -80,7 +81,7 @@ public class NotesCRUDHelper {
         String selection = null;
         String selectionArgs[] = null;
 
-        if (id >= 0) {
+        if (!getAll) {
             selection = NotesContract.NoteEntry._ID + " = ? ";
 
             selectionArgs = new String[1];
@@ -103,8 +104,10 @@ public class NotesCRUDHelper {
         Cursor cursor = db.query(NotesContract.NoteEntry.TABLE, projection, selection, selectionArgs, null, null, null);
 
         ArrayList<Note> noteArrayList = new ArrayList<>();
-        while (cursor.moveToNext()) {
-            noteArrayList.add(new Note(cursor));
+        if (cursor.moveToFirst()) {
+            do {
+                noteArrayList.add(new Note(cursor));
+            } while (cursor.moveToNext());
         }
         cursor.close();
 

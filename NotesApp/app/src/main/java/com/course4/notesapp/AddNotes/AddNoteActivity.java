@@ -20,6 +20,7 @@ public class AddNoteActivity extends AppCompatActivity implements AddNotesContra
     EditText titleEdt;
     EditText contentEdt;
     AddNotePresenter presenter;
+    int noteID = -1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class AddNoteActivity extends AppCompatActivity implements AddNotesContra
 
             if (noteViewModal != null) {
                 populateViews(noteViewModal.content, noteViewModal.title);
+                noteID = noteViewModal.id;
             }
         }
 
@@ -45,7 +47,7 @@ public class AddNoteActivity extends AppCompatActivity implements AddNotesContra
             public void onClick(View view) {
                 String title = titleEdt.getText().toString();
                 String content = contentEdt.getText().toString();
-                NoteViewModal noteViewModal = new NoteViewModal(-1, title, content);
+                NoteViewModal noteViewModal = new NoteViewModal(noteID, title, content);
                 presenter.saveNote(noteViewModal);
             }
         });
@@ -60,8 +62,10 @@ public class AddNoteActivity extends AppCompatActivity implements AddNotesContra
 
     @Override
     public void onSaved(boolean result) {
-        Toast.makeText(AddNoteActivity.this, "Node saved successfully", Toast.LENGTH_SHORT).show();
-        finish();
+        if (result) {
+            Toast.makeText(AddNoteActivity.this, "Note saved successfully", Toast.LENGTH_SHORT).show();
+            finish();
+        }
     }
 
     @Override

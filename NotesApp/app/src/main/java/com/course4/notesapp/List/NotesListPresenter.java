@@ -59,7 +59,7 @@ public class NotesListPresenter {
 
         @Override
         protected ArrayList<NoteViewModal> doInBackground(Void... voids) {
-            ArrayList<Note> noteArrayList = notesCRUDHelper.query(-1);
+            ArrayList<Note> noteArrayList = notesCRUDHelper.query(-1, true);
             ArrayList<NoteViewModal> result = new ArrayList<>(noteArrayList.size());
             for (Note n : noteArrayList) {
                 result.add(NoteViewModal.adapter(n));

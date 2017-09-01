@@ -60,7 +60,7 @@ public class AddNotePresenter {
         @Override
         protected Boolean doInBackground(Note... notes) {
             Note note = notes[0];
-            ArrayList<Note> noteArrayList = notesCRUDHelper.query(note.id);
+            ArrayList<Note> noteArrayList = notesCRUDHelper.query(note.id, false);
             boolean result = false;
 
             if (noteArrayList.isEmpty()) {

@@ -6,6 +6,7 @@ import android.database.Cursor;
 import com.course4.notesapp.NoteViewModal;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -33,7 +34,11 @@ public class Note {
         this.id = c.getInt(c.getColumnIndex(NotesContract.NoteEntry._ID));
         this.title = c.getString(c.getColumnIndex(NotesContract.NoteEntry.COLUMN_NAME_TITLE));
         this.content = c.getString(c.getColumnIndex(NotesContract.NoteEntry.COLUMN_NAME_CONTENT));
-        this.timeStamp = Timestamp.valueOf(c.getString(c.getColumnIndex(NotesContract.NoteEntry.COLUMN_TIMESTAMP)));
+        try {
+            this.timeStamp = dateFormat.parse(c.getString(c.getColumnIndex(NotesContract.NoteEntry.COLUMN_TIMESTAMP)));
+        } catch (ParseException e) {
+            throw new RuntimeException("Error while parsing the DATATIME from db. " + e.getMessage());
+        }
     }
 
     public ContentValues getAsContentValues() {

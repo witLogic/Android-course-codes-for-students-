@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.course4.intentactionsandotherattributes">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".OtherActivity">
+            <intent-filter android:label="Other activity">
+                <action android:name="android.intent.action.VIEW" />
+
+                <!--Category intent definition-->
+                <!--The target activity allows itself to be started by a web browser to display data referenced by a link, such as an image or an e-mail message.-->
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!--url: https://github.com/swaaminathanm/Android-Course-->
+                <data android:host="github.com" />
+                <data android:pathPattern="/swaaminathanm/Android-Course" />
+                <data android:scheme="https" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

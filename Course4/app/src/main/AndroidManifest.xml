@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.course4.notesapp">
 
+    <permission android:name="com.course4.notesapp.provider.permission.READ_WRITE_PROVIDER" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -23,9 +25,9 @@
 
         <provider
             android:name=".db.Provider.NotesAppProvider"
+            android:authorities="com.course4.notesapp.provider"
             android:enabled="true"
             android:exported="true"
-            android:authorities="com.course4.notesapp.provider"
             android:permission="com.course4.notesapp.provider.permission.READ_WRITE_PROVIDER" />
     </application>
 

@@ -16,6 +16,7 @@
         android:ems="10"
         android:hint="enter title"
         android:inputType="textPersonName"
+        android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintLeft_toLeftOf="parent"

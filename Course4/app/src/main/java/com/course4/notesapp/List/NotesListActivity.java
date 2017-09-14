@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -13,6 +16,8 @@ import android.widget.TextView;
 import com.course4.notesapp.AddNotes.AddNoteActivity;
 import com.course4.notesapp.R;
 import com.course4.notesapp.RecyclerItemClickListener;
+import com.course4.notesapp.Remainder.Remainder;
+import com.course4.notesapp.Remainder.RemainderActivity;
 
 import java.util.ArrayList;
 
@@ -32,13 +37,13 @@ public class NotesListActivity extends AppCompatActivity implements NotesListCon
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        findViewById(R.id.new_fab).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(NotesListActivity.this, AddNoteActivity.class);
-                startActivity(intent);
-            }
-        });
+//        findViewById(R.id.new_fab).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(NotesListActivity.this, AddNoteActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this
                 , new RecyclerItemClickListener.OnItemClickListener() {
@@ -54,6 +59,38 @@ public class NotesListActivity extends AppCompatActivity implements NotesListCon
 
         notesListAdapter = new NotesListAdapter();
         recyclerView.setAdapter(notesListAdapter);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.home_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.remainder:
+                openRemainderActivity();
+                return true;
+            case R.id.add:
+                openAddNotesActivity();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void openAddNotesActivity() {
+        Intent intent = new Intent(NotesListActivity.this, AddNoteActivity.class);
+        startActivity(intent);
+    }
+
+    private void openRemainderActivity() {
+        Intent intent = new Intent(NotesListActivity.this, RemainderActivity.class);
+        startActivity(intent);
     }
 
     @Override

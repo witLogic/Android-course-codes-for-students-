@@ -21,7 +21,19 @@
 
         <activity
             android:name=".AddNotes.AddNoteActivity"
-            android:parentActivityName=".List.NotesListActivity" />
+            android:parentActivityName=".List.NotesListActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".List.NotesListActivity" />
+        </activity>
+
+        <activity
+            android:name=".Remainder.RemainderActivity"
+            android:parentActivityName=".List.NotesListActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".List.NotesListActivity" />
+        </activity>
 
         <provider
             android:name=".db.Provider.NotesAppProvider"
@@ -29,6 +41,8 @@
             android:enabled="true"
             android:exported="true"
             android:permission="com.course4.notesapp.provider.permission.READ_WRITE_PROVIDER" />
+
+        <receiver android:name=".Remainder.AlarmReceiver" />
     </application>
 
 </manifest>

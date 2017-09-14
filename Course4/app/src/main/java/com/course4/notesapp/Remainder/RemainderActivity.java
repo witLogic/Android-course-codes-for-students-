@@ -69,6 +69,7 @@ public class RemainderActivity extends AppCompatActivity implements View.OnClick
                     .append(":").append(pad(min)));
             submit.setVisibility(View.GONE);
             fromNotification = true;
+            notesEdt.setEnabled(false);
         }
     }
 
@@ -161,7 +162,7 @@ public class RemainderActivity extends AppCompatActivity implements View.OnClick
         long time = futureTime - currentTime;
 
         // test: set an alarm after 5 sec.
-        time = 5000;
+        // time = 5000;
         futureTime = SystemClock.elapsedRealtime() + time;
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);

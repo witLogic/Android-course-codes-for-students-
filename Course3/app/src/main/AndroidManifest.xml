@@ -39,6 +39,8 @@
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
+                <!--Category intent definition-->
+                <!--The target activity allows itself to be started by a web browser to display data referenced by a link, such as an image or an e-mail message.-->
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 

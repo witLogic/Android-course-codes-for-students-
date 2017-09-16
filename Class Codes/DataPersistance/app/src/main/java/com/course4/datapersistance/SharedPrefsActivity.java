@@ -27,6 +27,7 @@ public class SharedPrefsActivity extends AppCompatActivity {
             dataFromPrefs = random.nextInt(9);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putInt("data", dataFromPrefs);
+            editor.putString("data_test", "Hello world");
             editor.apply();
         }
 

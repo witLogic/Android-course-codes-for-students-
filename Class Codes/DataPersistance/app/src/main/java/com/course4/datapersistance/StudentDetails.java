@@ -18,4 +18,9 @@ public class StudentDetails {
         this.dob = dob;
         this.percentage = percentage;
     }
+
+    @Override
+    public String toString() {
+        return "" + regID + " | " + name + " | " + "" + rank + " | " + dob + " | " + "" + percentage;
+    }
 }

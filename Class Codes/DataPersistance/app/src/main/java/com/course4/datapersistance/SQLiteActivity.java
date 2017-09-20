@@ -3,6 +3,7 @@ package com.course4.datapersistance;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -57,7 +58,8 @@ public class SQLiteActivity extends AppCompatActivity {
         });
 
         TextView queryTxt = (TextView) findViewById(R.id.query_text);
-        ArrayList<StudentDetails> result = queryAllData();
+        //ArrayList<StudentDetails> result = queryAllData();
+        ArrayList<StudentDetails> result = queryAllDataContentProvider();
 
         StringBuilder sb = new StringBuilder();
         sb.append("Query: select * from student_details \n");
@@ -67,12 +69,36 @@ public class SQLiteActivity extends AppCompatActivity {
             sb.append("\n");
         }
 
-        sb.append("Query: select * from student_details where rank = 4 p percentage = 70 \n");
-
-        ArrayList<StudentDetails> r = query(4, 70);
-        sb.append(r.get(0).toString());
+//        sb.append("Query: select * from student_details where rank = 4 p percentage = 70 \n");
+//
+//        ArrayList<StudentDetails> r = query(4, 70);
+//        sb.append(r.get(0).toString());
 
         queryTxt.setText(sb.toString());
+    }
+
+    public ArrayList<StudentDetails> queryAllDataContentProvider() {
+        ArrayList<StudentDetails> result = new ArrayList<>();
+        Cursor cursor = getContentResolver().query(Uri.parse("content://com.course4.datapersistance.provider/student_details")
+                , null, null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                int regID = cursor.getInt(cursor.getColumnIndex(COL_REG_ID));
+                String name = cursor.getString(cursor.getColumnIndex(COL_NAME));
+                String dob = cursor.getString(cursor.getColumnIndex(COL_DOB));
+                float percentage = cursor.getFloat(cursor.getColumnIndex(COL_PERCENTAGE));
+                int rank = cursor.getInt(cursor.getColumnIndex(COL_RANK));
+
+                StudentDetails s = new StudentDetails(regID, name, rank, dob, percentage);
+                result.add(s);
+
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+
+        return result;
     }
 
     public void insertData(StudentDetails studentDetails) {
@@ -148,7 +174,6 @@ public class SQLiteActivity extends AppCompatActivity {
         cursor.close();
 
         return result;
-
     }
 
 }

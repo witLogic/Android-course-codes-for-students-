@@ -1,4 +1,4 @@
-package com.course4.datapersistance;
+package com.course4.contentproviderimpl;
 
 import android.provider.BaseColumns;
 

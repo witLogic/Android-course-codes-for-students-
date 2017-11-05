@@ -1,5 +1,30 @@
 # Android-Course
 
++ Module 1
+	+ adb - Android debug bridge.
+		adb devices - list of android devices attached to the PC
+		adb pull - pull data from device
+		adb push - push data from device
+		adb shell - Android command line shell
+		adb logcat - https://developer.android.com/studio/command-line/logcat.html
+			eg: adb logcat ActivityManager:I MyApp:D *:S
+				Follows the format tag:priority; *:S silent other messages as to show only the messages that match the specified filter.
+	
+	+ Views - A single rectangle in the screen that has specific bounds
+	+ ViewGroup/Layout - Parent for all Views, used to arrange and impose rules on child Views for 			desired View placement.
+	+ LinearLayout - Vertical or Horizontal
+	+ RelativeLayout - Flexible
+	+ Constraint layout
+		+ Horizontal/Vertical constraints
+		+ Bias Vertical/Horizontal
+		+ Baseline
+		+ Chains
+			+ Spread
+			+ Spread inside
+			+ Weighted
+			+ Packed
+			More info : https://developer.android.com/training/constraint-layout/index.html
+
 + Data Persistance Notes
   	+ Look at shared_prefs file
     	$ adb shell
